@@ -106,15 +106,15 @@ For example, with `subsetSum(100, [1,2,3,4,5,6,7,8,9,10])` we might arrive at th
 
 Since many of the possibilities we generate are redundant, we can find the answer once and cache it for future attempts. That way, if we come across a possibility we've seen before, we needn't explore any of it's "subtargets"—we can just return the cached result right away.
 
-Here's what the solution looks like with delicious memoization sprinkled on top.
+Here's what the solution looks like with delicious caching sprinkled on top.
 
 Like so:
 
 ```js
-// initialize the index to 0 and the memoized results to an empty object
-function subsetSum (target, nums, idx = 0, memo = {}) {
+// initialize the index to 0 and the cached results to an empty object
+function subsetSum (target, nums, idx = 0, cache = {}) {
   // if we've seen this target and already solved for it, return the answer right away
-  if (memo.hasOwnProperty(target)) return memo[target];
+  if (cache.hasOwnProperty(target)) return cache[target];
   // if we've hit 0 we're done!
   if (target === 0) return true;
   // stop trying and return false if the target is negative OR if we've reached the end of the array
@@ -122,14 +122,14 @@ function subsetSum (target, nums, idx = 0, memo = {}) {
   const num = nums[idx];
   // capture the boolean result for the possibility of *excluding* the current number from the sum
   // recursively try with the same target, but continue onto the next index
-  const whenExcluded = subsetSum(target, nums, idx + 1, memo);
+  const whenExcluded = subsetSum(target, nums, idx + 1, cache);
   // capture the boolean result for the possibility of *including* the current number in the sum
   // recursively try with the target minus this number and continue onto the next index
-  const whenIncluded = subsetSum(target - num, nums, idx + 1, memo);
+  const whenIncluded = subsetSum(target - num, nums, idx + 1, cache);
   // determine whether either possibility came back true
   const result = whenExcluded || whenIncluded;
   // cache this answer, associating it with this particular target
-  memo[target] = result;
+  cache[target] = result;
   return result;
 }
 ```
@@ -137,7 +137,7 @@ function subsetSum (target, nums, idx = 0, memo = {}) {
 ## Additions: 
 ![subsetsum visualization](https://user-images.githubusercontent.com/21270878/27439357-c61c4198-5735-11e7-9261-8d8202abe983.jpg)
 
-* Here is a [repl](https://repl.it/Ivkg/4) showing the difference between the memoized and non-memoized versions
+* Here is a [repl](https://repl.it/Ivkg/4) showing the difference between the cached and non-cached versions
 * Here are the [slides](http://slides.com/mithunselvaratnam/subset-sum-2#/)
 * Here is a [video](https://www.youtube.com/watch?v=s6FhG--P7z0) of the O(n*m) solution 
 
