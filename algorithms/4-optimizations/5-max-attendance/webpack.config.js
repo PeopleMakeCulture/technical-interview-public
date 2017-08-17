@@ -4,6 +4,7 @@ const publicFolder = path.join(__dirname, 'public');
 
 module.exports = {
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     './src/index.js'
   ],
@@ -15,10 +16,7 @@ module.exports = {
     rules: [{
       test: /\.js$/,
       exclude: /node_modules/,
-      use: [
-        'react-hot-loader/webpack',
-        'babel-loader'
-      ]
+      use: 'babel-loader'
     }]
   },
   devtool: 'source-map'
