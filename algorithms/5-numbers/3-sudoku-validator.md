@@ -17,7 +17,7 @@ Write a function that determines if a Sudoku solution is valid. Your input will 
 Your input is a 2-D array that represents a 9x9 matrix. For example:
 
 ```js
-var solution = [
+const solution = [
   [5,3,4,6,7,8,9,1,2],
   [6,7,2,1,9,5,3,4,8],
   [1,9,8,3,4,2,5,6,7],
@@ -33,7 +33,7 @@ var solution = [
 # Examples
 
 ```js
-sudokuValidator([
+isValidSudoku([
   [5, 3, 4, 6, 7, 8, 9, 1, 2],
   [6, 7, 2, 1, 9, 5, 3, 4, 8],
   [1, 9, 8, 3, 4, 2, 5, 6, 7],
@@ -45,7 +45,7 @@ sudokuValidator([
   [3, 4, 5, 2, 8, 6, 1, 7, 9]
 ]);
 //should return true
-sudokuValidator([
+isValidSudoku([
   [1, 2, 3, 4, 5, 6, 7, 8, 9],
   [2, 3, 1, 5, 6, 4, 8, 9, 7],
   [3, 1, 2, 6, 4, 5, 9, 7, 8],
@@ -291,9 +291,9 @@ With the various origins and offsets put together, the snippet would be:
 ```js
 // ...
 const xOrigin = Math.floor(i / 3) * 3;
-const xOffset = j % 3;
+const xOffset = Math.floor(j / 3);
 const yOrigin = (i % 3) * 3;
-const yOffset = Math.floor(j / 3);
+const yOffset = j % 3;
 // ...
 ```
 
@@ -301,8 +301,8 @@ const yOffset = Math.floor(j / 3);
 
 ```js
 // ...
-const x = (Math.floor(i / 3) * 3) + (j % 3);
-const y = ((i % 3) * 3) + Math.floor(j / 3);
+const x = (Math.floor(i / 3) * 3) + Math.floor(j / 3);
+const y = ((i % 3) * 3) + (j % 3);
 // ...
 ```
 
@@ -316,7 +316,7 @@ function check (arr) {
   });
 }
 
-function validSolution (solution) {
+function isValidSudoku (solution) {
   for (let i = 0; i < 9; i++) {
     const col = [];
     const row = [];
@@ -324,8 +324,8 @@ function validSolution (solution) {
     for (let j = 0; j < 9; j++) {
       col.push(solution[j][i]);
       row.push(solution[i][j]);
-      const x = (Math.floor(i / 3) * 3) + (j % 3);
-      const y = ((i % 3) * 3) + Math.floor(j / 3);
+      const x = (Math.floor(i / 3) * 3) + Math.floor(j / 3);
+      const y = ((i % 3) * 3) + (j % 3);
       square.push(solution[y][x]);
     }
     if (!check(col) || !check(row) || !check(square)) return false;
