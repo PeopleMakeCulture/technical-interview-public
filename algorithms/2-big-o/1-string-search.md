@@ -5,13 +5,13 @@ class: center, middle
 
 ---
 
-# Prompt
+# Interviewer Prompt
 
-You are attempting to find the index of the first appearance of one string (the needle) inside of another (the haystack).
+You are attempting to find the index of the first appearance of one string (the needle) inside of another (the haystack). If the needle isn't found, return -1.
 
 ---
 
-# Examples
+# Example Output
 
 ``` javascript
 indexOf('or', 'hello world'); // should return 7
@@ -21,38 +21,39 @@ indexOf('oox', 'ooboxoooxo'); // should return 6
 ```
 ---
 
-
-## Common approaches
-**built-in methods**
-
-- Most students' first instincts will be to use built-in string methods like `indexOf()`, `includes()` or `substring()`. `indexOf()` is, of course, explicitly forbidden; steer them away from methods like `includes()` and `substring()`.
-
---
-
-- Many whiteboard interviews will be language-agnostic and focus on the underlying concepts. You will want to show that you understand how these methods work, not that you happened to read the right documentation the night before.
-
---
-
-- You may actually be adding more (hidden) complexity. Look into how `indexOf()`, `includes()` and `substring()` work under the hood. Many built-in methods actually add an operation that's O(n), or worse.
+class: center middle
+## Interviewer Guide
 
 ---
 
-## Common approaches
-**split() and loop**
+### RE (Repeat and Examples)
 
-- Most students also move to split the haystack into an array of characters, and then loop through.
+* Prompt your interviewee to ask questions about any edge cases. For example, should `indexOf('hello', '')` return `0` or `-1`? This isn't stated in the prompt and should come out during this phase. (It's up to you which it should be. The native JS `.indexOf` will return 0)
 
---
-
-- This approach would work; but imagine the space complexity of generating a new array and then holding it in memory for a very, very large haystack. You would be introducing another O(n) dimension in time and space, where n is the length of the haystack.
-
---
-
-- If they're in a groove, have them finish out this approach and pseudocode it; then ask them how they would do this without generating a second copy of the haystack.
+* Most students' first instincts will be to use built-in string methods like `indexOf()`, `includes()` or `substring()`. `indexOf()` is, of course, explicitly forbidden; steer them away from methods like `includes()` and `substring()`.
 
 ---
 
-# Solution(s)
+### AC (Approach and Code)
+
+* The solution to this problem involves a nested for loop--the outer loop will loop through the haystack (the word we are searching in) and the inner loop will run through the characters in the needle (the string we are searching for).
+
+* Many students will move to split the haystack and/or needle into an array of characters, and then loop through.
+
+* This approach would work, but you would be introducing another O(n) dimension in time and space, where n is the length of the haystack.  If they're in a groove, have them finish out this approach and ask them how they would do this without generating a second copy of the haystack during the optimization phase.
+
+---
+
+### TO (Test and Optimize)
+
+* If the interviewee doesn't offer the information, ask about the time and space complexity of their solution.
+
+* Can it be improved? If they used split, or another built in method, is that method adding hidden complexity?
+
+---
+
+
+# A possible solution
 
 ```javascript
 function indexOf (needle, haystack) {
@@ -69,7 +70,7 @@ function indexOf (needle, haystack) {
 
 # Big O
 
-Where n is the haystack size and m the needle size, the solution is O(n&#42;m).
+Where n is the haystack size and m the needle size, the time complexity of the solution is O(n&#42;m).
 
 **Why?**
 ```javascript
@@ -88,6 +89,16 @@ function indexOf (needle, haystack) {
 }
 ```
 
-So, O(n &#42; (m &#42; (1 + 1)))=> O(n&#42;m)
+So, O(n \* (m \* (1 + 1))) => O(n \* m)
+
+---
+# Discussion: Can we do better?
 
 There are [other algorithms](https://en.wikipedia.org/wiki/String_searching_algorithm#Single_pattern_algorithms), such as [Boyer-Moore](https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string_search_algorithm) (well, [modified slightly](https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string_search_algorithm#The_Galil_Rule)), that can perform at O(n+m) time—or even faster.
+
+The idea behind this approach is that the string being searched (haystack) will be preprocessed, finding certain alignments that can be skipped, so that we aren't brute forcing every possible match.
+
+The interviewee isn't expected to know that, but it's fun trivia.
+
+
+
