@@ -1,10 +1,21 @@
-# Prompt
+class: center middle
+## TITLE
+
+---
+
+## Interviewer Prompt
 
 Given an an array of numbers, find the length of the longest possible subsequence that is increasing. This subsequence can "jump" over numbers in the array. For example in `[3, 10, 4, 5]` the longest increasing subsequence is `[3, 4, 5]`.
 
-# Examples
+???
 
-```js
+Presenter notes here
+
+---
+
+## Example Output
+
+```javascript
 longestIncreasingSubsequence([3, 4, 2, 1, 10, 6]);
 // should return 3, the length of the longest increasing subsequence:
 // 3, 4, 6
@@ -16,13 +27,64 @@ longestIncreasingSubsequence([10, 22, 9, 33, 20, 50, 41, 60, 80, 21, 23, 24, 25,
 // 10, 20, 21, 23, 24, 25, 26, 27, 28
 ```
 
-# Solutions
+---
+
+class: center middle
+## Interviewer Guide
+
+---
+
+### RE
+
+Coaching advice for the interviewer to make sure that their interviewee is asking the right questions
+
+#### Example:
+* If your interviewee continues without asking questions, stop them and ask, "Do you have any questions about the result?" In your prompt, you don't specify things like the order the strings need to be in, or whether there can be duplicates - these are the sorts of things that should come out in questioning.
+
+---
+
+### AC
+
+Coaching for the interviewer for how to help the interviewee while they're forming their approach and coding
+
+#### Example:
+* If your interviee struggles with an iterative approach, suggest that they think about the problem recursively. Make sure that they don't start coding until they've come up with an approach that they believe will work - otherwise, they'll likely run into a lot of pain points.
+
+---
+
+### TO
+
+Coaching on what to do if interviewees finish, or additional questions/optimization prompts
+
+#### Example:
+* If your interviewee finishes, ask them:
+  * What if duplicates are no longer allowed?
+  * What if the strings need to be in alphabetical order?
+  * How would you solve this problem for a very long string?
+
+---
+
+### Answers to Common Questions
+
+#### Example:
+* Do the strings in the array need to be in alphabetical order?
+  * _No, they do not need to be in any order._
+* Can the result array contain duplicates?
+  * _Yes, there can be logical duplicates, if two characters at different indicies are the same._
+
+---
+
+## Solution and Explanation (a)
 
 There is a brute force approach that would involve checking all possible combinations. There are many ways that would be better.
 
 Below is a recursive solution that steps through each number, considering two possibilities: excluding it from the subsequence and including in the subsequence. Thus each element generates two possible paths, both of which continue on to the next element, which generates two possible paths, etc. Therefore, without memoization we would expect this to be `O(2^n)` time complexity.
 
-```js
+---
+
+## Solution Code
+
+```javascript
 function longestIncreasingSubsequence (nums, idx = 0, base = -Infinity) {
   if (idx === nums.length) return 0;
   const num = nums[idx];
@@ -33,9 +95,17 @@ function longestIncreasingSubsequence (nums, idx = 0, base = -Infinity) {
 }
 ```
 
-With memoization:
+---
 
-```js
+## Optimized Solution and Explanation (a)
+
+We can further optimize this solution by adding memoization. Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache.
+
+---
+
+## Solution Code
+
+```javascript
 function memoizedLIS (nums, idx = 0, base = -Infinity, memo = {}) {
   if (idx === nums.length) return 0;
   const num = nums[idx];
@@ -52,4 +122,10 @@ function memoizedLIS (nums, idx = 0, base = -Infinity, memo = {}) {
 }
 ```
 
-Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache.
+---
+
+## Summary
+
+Summary goes here
+
+---
