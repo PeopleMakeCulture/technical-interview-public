@@ -53,3 +53,31 @@ function memoizedLIS (nums, idx = 0, base = -Infinity, memo = {}) {
 ```
 
 Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache.
+
+---
+
+Iterative table-building solution:
+
+```javascript
+function iterativeLIS(arr) {
+  const lengths = new Array(arr.length).fill(1);
+  
+  for (let i = 1; i < arr.length; i++) {
+    for (let j = 0; j < i; j++) {
+      const isIncreasing = arr[j] < arr[i];
+      const sequenceLength = lengths[j] + 1; // +1 to add current num to sequence
+      const isLonger = sequenceLength > lengths[i];
+      
+      if (isIncreasing && isLonger) {
+        lengths[i] = sequenceLength;
+      }
+    }
+  }
+  return Math.max(...lengths);
+}
+```
+Watch a walkthrough of this solution [here](https://www.youtube.com/watch?v=CE2b_-XfVDk)
+
+This table building technique is a dynamic programming technique that can be adapted to solve similar problems, such as max-sum-of-increasing-subsequence and minimum-coins-to-make-change.
+
+This solution runs in O(n^2) time, and takes O(n) space.
