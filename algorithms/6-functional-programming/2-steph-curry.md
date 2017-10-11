@@ -33,17 +33,24 @@ Now you must be the Curry
 # Solutions
 
 ```javascript
-function curry (originalFunc) {
-  let argsMemory = [];
-  return function resolver () {
-    const args = [].slice.call(arguments);
-    argsMemory = argsMemory.concat(args);
-    if (argsMemory.length >= originalFunc.length) {
-      return originalFunc.apply(null, argsMemory) 
-    } else {
-      return resolver;
-    }
-  }
+function curry(originalFunc) {
+    var originalLength = originalFunc.length;
+
+    function resolver() {
+	var memory = Array.prototype.slice.call(arguments);
+		
+	return function() {
+	    var args = Array.prototype.slice.call(arguments);
+	    var copy = memory.concat(args);
+
+	    if (copy.length >= originalLength){
+                return originalFunc.apply(null, copy);
+            }
+	    else return resolver.apply(null, copy);
+	};
+    };
+
+    return resolver();
 }
 ```
 
