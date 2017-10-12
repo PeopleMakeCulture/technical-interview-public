@@ -29,15 +29,72 @@ longestIncreasingSubsequence([10, 22, 9, 33, 20, 50, 41, 60, 80, 21, 23, 24, 25,
 
 ---
 
-## Solution and Explanation (a)
-
-There is a brute force approach that would involve checking all possible combinations. There are many ways that would be better.
-
-Below is a recursive solution that steps through each number, considering two possibilities: excluding it from the subsequence and including in the subsequence. Thus each element generates two possible paths, both of which continue on to the next element, which generates two possible paths, etc. Therefore, without memoization we would expect this to be `O(2^n)` time complexity.
+class: center middle
+## Interviewer Guide
 
 ---
 
-## Solution Code
+### RE
+
+Coaching advice for the interviewer to make sure that their interviewee is asking the right questions
+
+#### Example:
+* Make sure that your interviewee is clear on what is meant by an increasing subsequence.
+
+---
+
+### AC
+
+Coaching for the interviewer for how to help the interviewee while they're forming their approach and coding
+
+#### Example:
+* There are two basic approaches to this problem - either an approach that generates all subsequences and then figures out which is longest (generally known as a "backtrack"), or a recursive/dynamic approach.
+
+---
+
+### TO
+
+Coaching on what to do if interviewees finish, or additional questions/optimization prompts
+
+#### Example:
+* If your interviewee used the backtrack approach, see if you can get them to consider a recursive approach.
+* If your interviewee finishes a recursive solution but doesn't include memoization, ask then about the solution's time complexity. You may prompt the to them draw out the call tree for their un-memoized solution, to see what calls are being repeated. Then ask them to write in an optimization that will avoid those repeated calls.
+
+---
+
+### Answers to Common Questions
+
+#### Example:
+* What kind of repeated work does the memoized solution eliminate?
+  * _Here's a repl.it which will illustrate how many repeated calls occur_
+
+---
+
+## Backtrack Solution and Explanation (a)
+
+There is the brute force "backtrack" approach that would involve generating all of the possible subsequences, and then figuring out which one(s) is the longest. We would expect this to be `O(n^2)` time complexity, and `O(?)` space complexity.
+
+---
+
+## Backtrack Solution Code
+
+```javascript
+function longestIncreasingSubsequence (nums) {
+
+}
+```
+
+---
+
+## Recursive Solution and Explanation (b)
+
+Below is a recursive solution that steps through each number, considering two possibilities: excluding it from the subsequence and including in the subsequence. Thus each element generates two possible paths, both of which continue on to the next element, which generates two possible paths, etc. Therefore, without memoization we would expect this to be `O(2^n)` time complexity. We'd definitely want to add memoization!
+
+Additionally, the space complexity for the dynamic approach would also be worse - remember that when we're determining the extra space that an algorithm uses, we want to also include any space that's taken up in the call stack.
+
+---
+
+## Recursive Solution Code
 
 ```javascript
 function longestIncreasingSubsequence (nums, idx = 0, base = -Infinity) {
@@ -52,9 +109,9 @@ function longestIncreasingSubsequence (nums, idx = 0, base = -Infinity) {
 
 ---
 
-## Optimized Solution and Explanation (a)
+## Optimized Recursive Solution and Explanation (c)
 
-We can further optimize this solution by adding memoization. Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache.
+We can further optimize this solution by adding memoization. Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache. This would have `O(n)`
 
 ---
 
