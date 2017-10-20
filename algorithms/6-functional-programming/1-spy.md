@@ -56,53 +56,53 @@ class: center middle
 
 Coaching advice for the interviewer to make sure that their interviewee is asking the right questions
 
-* If your interviewee continues without asking questions, stop them and ask, "Do you have any questions about the result?" In your prompt, you don't specify things like the order the strings need to be in, or whether there can be duplicates - these are the sorts of things that should come out in questioning.
+A good question would be whether the saved arguments and results need to be correlated to individual calls of the spy (they don't). For instance, given the following three calls of a spy:
+
+```javascript
+mySpy(1)
+mySpy(1, 2)
+mySpy(2)
+```
+
+The internal `calledWith` array/set needs only be [1, 2].
+
+
 
 ---
 
 ### AC
 
-Coaching for the interviewer for how to help the interviewee while they're forming their approach and coding
-
-#### Example:
-* If your interviee struggles with an iterative approach, suggest that they think about the problem recursively. Make sure that they don't start coding until they've come up with an approach that they believe will work - otherwise, they'll likely run into a lot of pain points.
+* It's important that the interviewee recalls that javascript functions can maintain internal state by closing over internal variables.
 
 ---
 
 ### TO
 
-Coaching on what to do if interviewees finish, or additional questions/optimization prompts
-
-#### Example:
-* If your interviewee finishes, ask them:
-  * What if duplicates are no longer allowed?
-  * What if the strings need to be in alphabetical order?
-  * How would you solve this problem for a very long string?
+* When your interviewee finishes, ensure that they check that the spy is reusable (ie. one spy can be called multiple times and saves all the results) and that the spy can handle an arbitrary number of arguments.
 
 ---
 
 ### Answers to Common Questions
 
-#### Example:
-* Do the strings in the array need to be in alphabetical order?
-  * _No, they do not need to be in any order._
-* Can the result array contain duplicates?
-  * _Yes, there can be logical duplicates, if two characters at different indicies are the same._
+* Does the spy take a fixed number of arguments?
+  * _No, the spy should be able to take any number of arguments_
+* Do I need to track which arguments produced which return values?
+  * _No, you simply need to verify that a specific argument was supplied or return value was returned._
 
 ---
 
-## Solution and Explanation
+## Solution and Explanation (a)
 
----
-
-### 1. Create the SpyOn function
+### Create the SpyOn function
 
 ```javascript
 function spyOn (func) {
 
   // keep track of function call count,
   // initialize arrays to store results & arguments
-  let [callCount, calledWith, returnVals] = [0, [], []];
+  let callCount = 0;
+  let calledWith = [];
+  let returnVals = [];
 
   // function to be returned
   function spy (...args) {
@@ -128,8 +128,9 @@ function spyOn (func) {
 ```
 
 ---
+## Solution and Explanation (b)
 
-### 2. Figure out how to access function arguments
+### Figure out how to access function arguments
 
 ```javascript
 // Remember that function arguments are an array-like object?
@@ -158,28 +159,31 @@ function spy (...args) { // rest operator
 
 ---
 
-### 3. Save the returned and called values in the proper arrays and increment call count
+## Solution and Explanation (c)
+
+### Save the returned and called values in the proper arrays and increment call count
 
 ```javascript
 function spyOn (func) {
 
   let callCount = 0;
-  const calledWith = new Set(); // Use ES6 sets because
-  const returnVals = new Set(); // they're awesome.
+  let calledWith = [];
+  let returnVals = [];
 
   function spy (...args) {
 
     // call func with passed-in args
-    let returnVal = func(...args);    
+    let args = [].slice.call(arguments);
+		let returnVal = func.apply(this, args);
 
     // increment function call count by 1
     callCount++;
 
-    // add arguments array values to called values set
-    args.forEach(arg => calledWith.add(arg));
+    // add arguments array values to a one-dimensional array
+    calledWith = calledWith.concat(calledWith)
 
     // store result of applying function
-    returnVals.add(returnVal);
+    returnVals.push(returnVal);
 
     // return the result of the function call
     return returnVal;
@@ -196,57 +200,68 @@ function spyOn (func) {
 
 ---
 
-### 4. Implement the  'wasCalledWith' and 'returned' methods
+## Solution and Explanation (d)
+
+### Implement the  'wasCalledWith' and 'returned' methods
 
 ```javascript
 // The 'indexOf' method of an Array returns '-1' if a value is not found
 // We can use this to return a boolean value for the two search methods
 
 spy.wasCalledWith = function (val) {
-  return calledWith.has(val);
+  return calledWith.indexOf(val) !== -1;
 };
 
 spy.returned = function (val) {
-  return returnVals.has(val);
+  return returnVals.indexOf(val) !== -1;
 };
 
 ```
 
 ---
 
-## Full Solution Code
+## Solution and Explanation (e)
 
-[Repl](https://repl.it/CkaZ/6)
+### Full Solution Code
+
+[Repl](https://repl.it/CkaZ/)
+[Repl: ES6](https://repl.it/CkaZ/6)
 
 ```javascript
 function spyOn (func) {
-  let callCount = 0;
-  const calledWith = new Set();
-  const returnVals = new Set();
 
-  function spy (...args) {
-    const result = func(...args);
-    callCount++;
-    args.forEach(arg => calledWith.add(arg));
-    returnVals.add(result);
-    return result;
-  }
+	let callCount = 0;
+	let calledWith = [];
+	let returnVals = [];
 
-  spy.getCallCount = function () {
-    return callCount;
-  };
+	function spy () {
 
-  spy.wasCalledWith = function (argument) {
-    return calledWith.has(argument);
-  };
+		let args = [].slice.call(arguments);
+		let returnVal = func.apply(this, args);
 
-  spy.returned = function (result) {
-    return returnVals.has(result);
-  };
+		callCount++;
+		calledWith = calledWith.concat(args);
+		returnVals.push(returnVal);
 
-  return spy;
+		return returnVal;
+
+	}
+
+	spy.getCallCount = function () {
+		return callCount;
+	};
+
+	spy.wasCalledWith = function (val) {
+		return calledWith.indexOf(val) !== -1;
+	};
+
+	spy.returned = function (val) {
+		return returnVals.indexOf(val) !== -1;
+	};
+
+	return spy;
+
 }
-
 module.exports = spyOn;
 ```
 
@@ -254,26 +269,6 @@ module.exports = spyOn;
 
 ## Summary
 
-Summary goes here
+
 
 ---
-
-
-
-
-
-
-
-# Legacy Stuff below...
-
-[Slides](http://slides.com/bryangergen/reacto_spy#/)
-
-
-[ES6 Repl](https://repl.it/CkaY/2)
-
----
-
-# Prompt
-
-
-# Example
