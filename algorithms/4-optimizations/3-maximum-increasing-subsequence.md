@@ -41,14 +41,17 @@ Coaching advice for the interviewer to make sure that their interviewee is askin
 #### Example:
 * Make sure that your interviewee is clear on what is meant by an increasing subsequence.
 
+* Your interviewee should be asking questions about the types of inputs they should be expecting; will the passed in arrays only contain integers? Will they possibly contain negative numbers? Will they need to handle non-number elements in the array? (they can expect only positive integers)
+
 ---
 
 ### AC
 
 Coaching for the interviewer for how to help the interviewee while they're forming their approach and coding
 
-#### Example:
-* There are two basic approaches to this problem - either an approach that generates all subsequences and then figures out which is longest (generally known as a "backtrack"), or a recursive/dynamic approach.
+* There are two basic approaches to this problem - either an approach that generates all subsequences and then figures out which is longest (this type of a approach is sometimes called a "backtrack"), or a recursive/dynamic approach.
+
+* If your interviewee comes up with the brute force rather than recursive approach, then let them code that out, rather than guiding them towards the recursive approach.
 
 ---
 
@@ -56,33 +59,24 @@ Coaching for the interviewer for how to help the interviewee while they're formi
 
 Coaching on what to do if interviewees finish, or additional questions/optimization prompts
 
-#### Example:
-* If your interviewee used the backtrack approach, see if you can get them to consider a recursive approach.
+* If your interviewee used the brute force approach, see if you can get them to consider a recursive approach. Some hints in this case:
+  * The function may take in more information than just the array. In order to check for increasing subsequences in the array, what other things might you want to pass along to other function calls?
+
 * If your interviewee finishes a recursive solution but doesn't include memoization, ask then about the solution's time complexity. You may prompt the to them draw out the call tree for their un-memoized solution, to see what calls are being repeated. Then ask them to write in an optimization that will avoid those repeated calls.
 
 ---
 
 ### Answers to Common Questions
 
-#### Example:
 * What kind of repeated work does the memoized solution eliminate?
-  * _Here's a repl.it which will illustrate how many repeated calls occur_
+  * _[Here's a repl.it](https://repl.it/NVR0) which will illustrate how many repeated calls occur_
 
----
+* What is the space complexity for the naive recursive solution?
 
-## Backtrack Solution and Explanation (a)
+* What is the time/space complexity for the memoized solution?
 
-There is the brute force "backtrack" approach that would involve generating all of the possible subsequences, and then figuring out which one(s) is the longest. We would expect this to be `O(n^2)` time complexity, and `O(?)` space complexity.
-
----
-
-## Backtrack Solution Code
-
-```javascript
-function longestIncreasingSubsequence (nums) {
-
-}
-```
+* Why do we have to pass the whole array in every call, instead of passing along subarrays with the first index sliced off instead?
+  * _Passing along a reference to the whole array conserves space, but is less "functional"; passing along a copy of a subarray protects you from accidentally mutating the original array, but takes up more space in memory._
 
 ---
 
@@ -90,7 +84,7 @@ function longestIncreasingSubsequence (nums) {
 
 Below is a recursive solution that steps through each number, considering two possibilities: excluding it from the subsequence and including in the subsequence. Thus each element generates two possible paths, both of which continue on to the next element, which generates two possible paths, etc. Therefore, without memoization we would expect this to be `O(2^n)` time complexity. We'd definitely want to add memoization!
 
-Additionally, the space complexity for the dynamic approach would also be worse - remember that when we're determining the extra space that an algorithm uses, we want to also include any space that's taken up in the call stack.
+Additionally, the space complexity for the unmemoized recursive approach would also be worse - remember that when we're determining the extra space that an algorithm uses, we want to also include any space that's taken up in the call stack.
 
 ---
 
@@ -111,7 +105,7 @@ function longestIncreasingSubsequence (nums, idx = 0, base = -Infinity) {
 
 ## Optimized Recursive Solution and Explanation (c)
 
-We can further optimize this solution by adding memoization. Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache. This would have `O(n)`
+We can further optimize this solution by adding memoization. Notice that we're only memoizing the `whenIncluded` results. That's because we can have very different possibilities for the `whenExcluded` branches—they're not straightforward to cache.
 
 ---
 
