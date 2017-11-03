@@ -57,8 +57,7 @@ function intersection (arrA, arrB) {
 
 # Optimal Approach
 
-A more optimal approach involves "ratcheting" forward through both arrays. You can start an index for each array at zero, incrementing each index whenever its corresponding element is less than its counterpart in the other array. Whenever two elements are equal, add that value to the resulting array (and increment both indexes). 
-
+This approach involves "ratcheting" forward through both arrays. Start at index 0 for both arrays and increment each index whenever an element at an index is less than its counterpart in the other array. If two elements are equal, add that value to the result array. Then, increment both indexes. 
 ```
  i             j
  v             v
