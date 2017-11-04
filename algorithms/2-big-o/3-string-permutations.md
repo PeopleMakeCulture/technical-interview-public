@@ -131,3 +131,32 @@ function sortedStringPermutations (str) {
   return stringPermutations(sortedStr);
 }
 ```
+
+---
+
+Another method that generates permutations of possible index values in a string. For instance, if we have the string `"abc"` then the index permutations would look like `[0, 1, 2], [0, 2, 1], [1, 0, 2], [1, 2, 0]...` From these we reduce each index permutation into strings based on the character at that index from the original string (ex. `[1, 2, 0]` becomes `"bca"`). After the recursive permutation generator completes, we sort the results.
+
+```js
+function stringPermutations(string) {
+  function genPerms(origString, indexPerms = [], result = []) {
+    // base case, current index permutation has same length as the input string
+    if (indexPerms.length === origString.length) {
+      // convert index permutation to string of characters at those indexes
+      const permString = indexPerms.reduce((acc, i) => acc + origString[i], '')
+      // if permutated string doesn't exist in results, add it
+      if (!result.includes(permString)) result.push(permString)
+    }
+    // iterate thru characters in the input string
+    for (let i = 0; i < origString.length; i++) {
+      // if the number i doesn't exist in current index permutation
+      if (!indexPerms.includes(i)) {
+        // recursively call genPerms and add current index to permutation
+        genPerms(origString, indexPerms.concat(i), result)
+      }
+    }
+    return result
+  } 
+  // call permutation generator with input string and sort its returned results
+  return genPerms(string).sort() 
+}
+```
