@@ -24,7 +24,6 @@ Example involving two sorted arrays:
 
 ```
 intersection([1,4,9,10,11], [2,3,4,5,8,10]); // should return [4, 10] 
-
 ```
 
 Follow-up example:
