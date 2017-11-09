@@ -24,7 +24,7 @@ Example involving two sorted arrays:
 
 ```
 intersection([1,4,9,10,11], [2,3,4,5,8,10]); // should return [4, 10] 
-//(numbers can be in any order)
+
 ```
 
 Follow-up example:
@@ -138,8 +138,10 @@ function intersection (arrA, arrB) {
   const smaller = arrB.length < arrA.length ? arrB : arrA;
   const larger = arrB.length >= arrA.length ? arrB : arrA;
 
-  const setSmaller = new Set(smaller);
+  const setSmaller = new Set(smaller); // o(n)
 
-  return larger.filter(elem => setSmaller.has(elem));
+
+  return larger.filter(elem => setSmaller.has(elem)); // o(m) - look up time in a set is o(1)
+  //o(m + n)
 }
 ```
