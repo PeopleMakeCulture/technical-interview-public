@@ -20,6 +20,8 @@ findWordsStartingWith(book, 'the'); // should return [ 18, 47, 97 ]
 findWordsStartingWith(book, 'cat'); // should return [ 69, 91 ]
 ```
 
+---
+
 # Solutions
 
 A naive solution involves simply looping through the text. This solution is O(n * m), where n is the length of the text and m is the length of the prefix.
@@ -44,6 +46,8 @@ function findWordsStartingWith (book, prefix) {
 }
 ```
 
+---
+
 For repeated executions, precomputing a trie would be extremely helpful.
 
 A trie is a tree-like structure that stores successive prefixes of a word.
@@ -52,10 +56,14 @@ A trie is a tree-like structure that stores successive prefixes of a word.
 
 While expensive at setup, this solution yields dividends in repeated lookups. Searching an existing trie is at most O(n), with n being the length of the prefix.
 
+---
+
 For more on tries:
 - [Dead simple explainer from a bioinformatics blog](http://bioinformatics.cvr.ac.uk/blog/trie-data-structure/)
 - [Brilliant.org explainer](https://brilliant.org/wiki/tries/)
 - [REPL walkthrough](https://repl.it/JsXG/8) of below solution
+
+---
 
 ```js
 const tries = {};
