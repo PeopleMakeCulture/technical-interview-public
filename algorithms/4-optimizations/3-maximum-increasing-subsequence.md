@@ -71,10 +71,6 @@ Coaching on what to do if interviewees finish, or additional questions/optimizat
 * What kind of repeated work does the memoized solution eliminate?
   * _[Here's a repl.it](https://repl.it/NVR0) which will illustrate how many repeated calls occur_
 
-* What is the space complexity for the naive recursive solution?
-
-* What is the time/space complexity for the memoized solution?
-
 * Why do we have to pass the whole array in every call, instead of passing along subarrays with the first index sliced off instead?
   * _Passing along a reference to the whole array conserves space, but is less "functional"; passing along a copy of a subarray protects you from accidentally mutating the original array, but takes up more space in memory._
 
