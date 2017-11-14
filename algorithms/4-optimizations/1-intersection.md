@@ -17,7 +17,7 @@ Follow-up example:
 ```js
 intersection([5,4,1,7,2], [4,2,3,5]); // should return [5, 4, 2] (numbers can be in any order)
 ```
-
+---
 # Solutions
 
 A naive, brute-force solution is to loop over the elements of one array, and within that loop, to loop over elements of the other array. For each pair of elements (one from each array) that are equal, push that value to a resultant array. This ends up being `O(n*m)` time complexity where `n` and `m` are the size of the given arrays. Below is an implementation:
@@ -35,7 +35,7 @@ function intersection (arrA, arrB) {
   return shared;
 }
 ```
-
+---
 A more optimal approach involves "ratcheting" forward through both arrays. You can start an index for each array at zero, incrementing each index whenever its corresponding element is less than its counterpart in the other array. Whenever two elements are equal, add that value to the resulting array (and increment both indexes). Diagrammed below:
 
 ```
@@ -64,7 +64,7 @@ right[j] < left[i] so j++
 ...etc
 */
 ```
-
+---
 Ultimately this solution is only possible because both arrays are sorted. The resulting algorithm is `O(n+m)` time complexity. Here's an implementation:
 
 ```js
@@ -88,7 +88,7 @@ function intersection (arrA, arrB) {
   return shared;
 }
 ```
-
+---
 For the follow-up, we could use a hash map to make a trade: time for space. The following solution is `O(n+m)` time complexity, but `O(n)` additional space, where `n` is the length of the smaller of the two arrays.
 
 ```js
