@@ -82,12 +82,13 @@ The internal `calledWith` array/set needs only be [1, 2].
 
 ---
 
-### Answers to Common Questions
+### Common Questions and approaches
 
 * Does the spy take a fixed number of arguments?
   * _No, the spy should be able to take any number of arguments_
 * Do I need to track which arguments produced which return values?
   * _No, you simply need to verify that a specific argument was supplied or return value was returned._
+* If the interviewee seems stuck, you may need to remind them about closure and how it allows you to keep track of internal state without exposing the state publicly.
 
 ---
 
