@@ -17,6 +17,7 @@ For this REACTO problem, implement a `spyOn` function which does the following:
   - `.wasCalledWith(val)`: returns `true` if `spy` was ever called with `val`, else returns `false`
   - `.returned(val)`: returns `true` if `spy` ever returned `val`, else returns `false`
 
+<<<<<<< HEAD
 ???
 
 Any presenter notes can go after the three question marks
@@ -24,6 +25,10 @@ Any presenter notes can go after the three question marks
 ---
 
 ## Example Output
+=======
+---
+# Example
+>>>>>>> master
 
 Below is a specific example of how `spyOn` might work in the wild. Keep in mind that not all functions take only two arguments…
 
@@ -44,6 +49,7 @@ adderSpy.wasCalledWith(0); // false
 adderSpy.returned(6); // true
 adderSpy.returned(9); // false
 ```
+<<<<<<< HEAD
 
 ---
 
@@ -95,6 +101,10 @@ The internal `calledWith` array/set needs only be [1, 2].
 ## Solution and Explanation (a)
 
 ### Create the SpyOn function
+=======
+---
+# Solution
+>>>>>>> master
 
 ```javascript
 function spyOn (func) {
