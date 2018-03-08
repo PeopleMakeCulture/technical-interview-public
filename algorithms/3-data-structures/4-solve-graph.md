@@ -126,12 +126,12 @@ const doesPathExist = (graph, start, target, visited = {}) => {
   });
 }
 ```
-
+[MDN .some()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
 ---
 
 ## Big O
 
-* Both DFS and BFS take O(V + E) time where V is the number of vetices or nodes and E is the number of edges. We MUST attempt to visit every node, which will take us through potentially many edges.
+* Both DFS and BFS take O(V + E) time where V is the number of vertices or nodes and E is the number of edges. We MUST attempt to visit every node, which will take us through potentially many edges.
 
   * For acyclic graphs, we might visit every node and hit the leaves
   * For cyclic graphs, the cycle might not occur until a 'leaf'
@@ -149,10 +149,6 @@ const doesPathExist = (graph, start, target, visited = {}) => {
   * Sometimes this means keeping a table of visited nodes
 
   * If nodes are objects, this could mean adding a 'visited' property
-
-
-[REPL Link with Console Logs](https://repl.it/JVhs/49)
-[REPL Link with Comments/Graph Variations](https://repl.it/@EmilyJordan/doesPathExist)
 
 ---
 
