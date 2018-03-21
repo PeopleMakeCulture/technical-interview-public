@@ -1,9 +1,3 @@
-[Slides](https://slides.com/seemaullal/reacto-3-8/)
-
-[Updates Slides](https://slides.com/pat310/reacto-3-8/)
-
----
-
 # Prompt
 
 Write a function that determines if a Sudoku solution is valid. Your input will be a 2-D array that represents a 9x9 matrix. Sudoku has three rules:
@@ -11,10 +5,12 @@ Write a function that determines if a Sudoku solution is valid. Your input will 
  - Every column must also contain every number from 1-9
  - Every 3x3 subgroup/square must contain each number from 1-9
 
+---
 # Representing the Data
 
-Your input is a 2-D array that represents a 9x9 matrix. For example:
+Your input is a 2-D array that represents a 9x9 matrix.
 
+![sudoku](https://i.imgur.com/jGCDott.png)
 ```js
 var solution = [
   [5,3,4,6,7,8,9,1,2],
@@ -28,7 +24,7 @@ var solution = [
   [3,4,5,2,8,6,1,7,9]
 ];
 ```
-
+---
 # Examples
 
 ```js
@@ -44,6 +40,7 @@ sudokuValidator([
   [3, 4, 5, 2, 8, 6, 1, 7, 9]
 ]);
 //should return true
+
 sudokuValidator([
   [1, 2, 3, 4, 5, 6, 7, 8, 9],
   [2, 3, 1, 5, 6, 4, 8, 9, 7],
@@ -58,6 +55,7 @@ sudokuValidator([
 //should return false
 ```
 
+---
 # Solution
 
 ```js
@@ -85,3 +83,52 @@ function validSolution(solution){
   return true;
 }
 ```
+
+---
+**Another Possible Solution**
+
+```js
+function sudokuValidator(solution) {
+    for (var i=0; i < 9; i++) { //check the rows
+        var curRow = [ ];
+        for (var j =0; j < 9; j++)  {
+            if (curRow.indexOf(solution[i][j]) > -1)
+                return false;
+            curRow.push(solution[i][j])
+        }
+    }
+    for (var k=0; k < 9; k++) { //check the columns
+        var curCol = [ ];
+        for (var m =0; m < 9; m++)  {
+            if (curCol.indexOf(solution[m][k]) > -1)
+                return false;
+            curCol.push(solution[m][k])
+        }
+    }
+    for(var p=0; p<9; p+=3){ //check the squares
+        for(var q=0; q<9; q+=3){
+            var curSquare = [ ];
+                for(var l=p; l<p+3; l++){
+                    for(var n=q; n<q+3; n++){
+                        if (curSquare.indexOf(solution[l][n]) > -1)
+                            return false;
+                        curSquare.push(solution[l][n]);
+                    }
+                }
+        }
+    }
+    return true;
+}
+```
+---
+#Efficiency
+
+- O(n2) at best since you need to check every space of the board in the worst case
+- Even with multiple for loops (the first solution), you check the board 3 times which is O(3n2) which is still O(n2)
+
+---
+#Conclusion
+
+- Be creative and show you can think of a problem in different ways
+- Be able to discuss efficiency in terms of Big-O notation
+- Know how to represent matrices in 2D arrays
