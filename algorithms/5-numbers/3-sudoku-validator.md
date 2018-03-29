@@ -69,9 +69,9 @@ function validSolution(solution){
   }
 
   for(let i=0;i<9;i++){
-    var col=[ ];
-    var row=[ ];
-    var square=[ ];
+    const col=[ ];
+    const row=[ ];
+    const square=[ ];
     for(var j=0;j<9;j++){
       col.push(solution[j][i]);
       row.push(solution[i][j]);
@@ -89,27 +89,27 @@ function validSolution(solution){
 
 ```js
 function sudokuValidator(solution) {
-    for (var i=0; i < 9; i++) { //check the rows
-        var curRow = [ ];
-        for (var j =0; j < 9; j++)  {
+    for (let i=0; i < 9; i++) { //check the rows
+        const curRow = [ ];
+        for (let j =0; j < 9; j++)  {
             if (curRow.indexOf(solution[i][j]) > -1)
                 return false;
             curRow.push(solution[i][j])
         }
     }
-    for (var k=0; k < 9; k++) { //check the columns
-        var curCol = [ ];
-        for (var m =0; m < 9; m++)  {
+    for (let k=0; k < 9; k++) { //check the columns
+        const curCol = [ ];
+        for (let m =0; m < 9; m++)  {
             if (curCol.indexOf(solution[m][k]) > -1)
                 return false;
             curCol.push(solution[m][k])
         }
     }
-    for(var p=0; p<9; p+=3){ //check the squares
-        for(var q=0; q<9; q+=3){
-            var curSquare = [ ];
-                for(var l=p; l<p+3; l++){
-                    for(var n=q; n<q+3; n++){
+    for(let p=0; p<9; p+=3){ //check the squares
+        for(let q=0; q<9; q+=3){
+            const curSquare = [ ];
+                for(let l=p; l<p+3; l++){
+                    for(let n=q; n<q+3; n++){
                         if (curSquare.indexOf(solution[l][n]) > -1)
                             return false;
                         curSquare.push(solution[l][n]);
@@ -123,8 +123,8 @@ function sudokuValidator(solution) {
 ---
 #Efficiency
 
-- O(n2) at best since you need to check every space of the board in the worst case
-- Even with multiple for loops (the first solution), you check the board 3 times which is O(3n2) which is still O(n2)
+- In the worst case of checking every space on the board, bigO is theoretically n^2, but since we have a finite square that is always 9x9, it is always 81 or constant time.
+- Even with multiple for loops (the first solution), you check the board 3 times which is O(3n^2) which is still O(n^2) or, again, constant if we assume a 9x9 board always.
 
 ---
 #Conclusion
